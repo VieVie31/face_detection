@@ -44,9 +44,14 @@ The image is first binarized using the k-means algorithm (k=2) to reveal the dar
 
 ![binarized image using kmean](img/k_mean_2k.png "binarized image using k-means")
 
-The binarized image is splitted in 4 parts, 2 tops and 2 bottoms, and with 1 cluster k-means on each of the top image, the eyes should be near to the center cluster...
+A sobel operator is applyed on the binaried image to improve the accuracy of detecting eyes... In did, without this trick, the center of a the cluster was biaised by the hairs if there was any on the picture, or other shadow, but now this issue seems to be solved by applying this operator and using only the edges found as points...
 
-![eyes found](img/eyes_centers.png "red points are the eyes found...")
+Look at the difference :
+
+![without sobel operator](img/eyes_center_with_binarized_image.png "without sobel operator")
+![with sobel operator trick](img/eyes_center_with_sobel_on_binarized_image.png "with the sobel operato trick")
+
+The sobel edged binarized image is splitted in 4 parts, 2 tops and 2 bottoms, and with 1 cluster k-means on each of the top image, the eyes should be near to the center cluster...
 
 ```bash
 python eyes_detection.py my_extracted_face.jpg

@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
+from skimage.filter import sobel
 from sklearn.cluster import KMeans
 
 
@@ -26,12 +27,15 @@ for i in range(64):
 binarized_img -= 1
 binarized_img = abs(binarized_img)
 
+#as the parts of hair in the image can move significantly the centroid
+#the use of sobel filter to get edges on binary images could mitigate this issue
+sob = sobel(binarized_img) > 0
 
 #split the image in 4 parts
-top_left  = binarized_img[:32,:32]
-top_right = binarized_img[:32,32:]
-bot_left  = binarized_img[32:,:32]
-bot_right = binarized_img[32:,32:]
+top_left  = sob[:32,:32]
+top_right = sob[:32,32:]
+bot_left  = sob[32:,:32]
+bot_right = sob[32:,32:]
 
 #get the top_left cluster center
 x, y = np.where(top_left == 1)
@@ -58,8 +62,8 @@ top_right_center[1] += 32
 
 #visualize result...
 bi = binarized_img.copy()
-bi[top_left_center[0],  top_left_center[1]]  = 5
-bi[top_right_center[0], top_right_center[1]] = 5
+bi[int(top_left_center[0]),  int(top_left_center[1])]  = 5
+bi[int(top_right_center[0]), int(top_right_center[1])] = 5
 plt.imshow(bi)
 plt.show()
 
