@@ -1,5 +1,6 @@
 import sys
 import cv2
+import math
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -59,14 +60,37 @@ top_left_center  = np.rint(top_left_center).tolist()
 top_right_center = np.rint(top_right_center).tolist()
 top_right_center[1] += 32
 
+top_left_center  = int(top_left_center[0]),  int(top_left_center[1])
+top_right_center = int(top_right_center[0]), int(top_right_center[1])
 
 #visualize result...
 bi = binarized_img.copy()
-bi[int(top_left_center[0]),  int(top_left_center[1])]  = 5
-bi[int(top_right_center[0]), int(top_right_center[1])] = 5
+bi[top_left_center[0],  top_left_center[1]]  = 5
+bi[top_right_center[0], top_right_center[1]] = 5
 plt.imshow(bi)
 plt.show()
 
 
+#get face rotation angle
+def angle_between(p1, p2):
+    ang1 = np.arctan2(*p1[::-1])
+    ang2 = np.arctan2(*p2[::-1])
+    return np.rad2deg((ang1 - ang2) % (2 * np.pi))
+
+def angle(p1, p2):
+    a = angle_between(p1, p2)
+    return np.rint(min(a, abs(360 - a)))
+
+theta = angle(top_left_center, top_right_center)
+print top_left_center
+print top_right_center
+print "rotation angle : {}".format(theta)
+
+#rotate the image to align face... seems to be not really performant... :'(
+M = cv2.getRotationMatrix2D((32, 32), theta, 1)
+dst = cv2.warpAffine(img, M, (64, 64))
+
+plt.imshow(dst)
+plt.show()
 
 
