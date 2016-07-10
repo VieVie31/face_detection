@@ -36,3 +36,20 @@ To run it type (once the lbp_model trained) :
 ```bash
 python extract.py my_image_name.jpg
 ```
+
+### eyes_detection.py
+
+Try to find where are eyes in the detected face...
+The image is first binarized using the k-means algorithm (k=2) to reveal the darkest parts of the images (eyes, mouth, hairs...)
+
+![binarized image using kmean](img/k_mean_2k.png "binarized image using k-means")
+
+The binarized image is splitted in 4 parts, 2 tops and 2 bottoms, and with 1 cluster k-means on each of the top image, the eyes should be near to the center cluster...
+
+![eyes found](img/eyes_centers.png "red points are the eyes found...")
+
+```bash
+python eyes_detection.py my_extracted_face.jpg
+```
+
+
