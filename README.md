@@ -48,8 +48,13 @@ A sobel operator is applyed on the binaried image to improve the accuracy of det
 
 Look at the difference :
 
+Without the sobel trick :
 ![without sobel operator](img/eyes_center_with_binarized_image.png "without sobel operator")
+![without sobel operator 2](img/without_sobel.png "without sobel")
+
+And now with the sobel trick :
 ![with sobel operator trick](img/eyes_center_with_sobel_on_binarized_image.png "with the sobel operato trick")
+![with sobel operator trick 2](img/with_sobel.png "with the sobel trick")
 
 The sobel edged binarized image is splitted in 4 parts, 2 tops and 2 bottoms, and with 1 cluster k-means on each of the top image, the eyes should be near to the center cluster...
 
