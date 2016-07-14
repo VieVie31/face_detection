@@ -1,5 +1,6 @@
 import os
 import cv2
+import sys
 import time
 import pickle
 import random
@@ -18,7 +19,18 @@ def pre_words_extraction(img):
     step = 4
     for i in range(0, img.shape[0], step):
         for j in range(0, img.shape[1], step):
-            pre_words.append(img[i*step:(i+1)*step, j*step:(j+1)*step])
+            pre_words.append(img[i:i+step, j:j+step])
     pre_words = map(lambda M: M.reshape((1, M.size))[0], pre_words)
     return pre_words
+
+def get_translator(words, nb_words=200):
+    k = KMeans(n_clusters=nb_words)
+    k.fit(words)
+    return k
+
+def get_words(img, translator):
+    pre_words = pre_words_extraction(img)
+    words = translator.predict(pre_words)
+    return words
+    
 
