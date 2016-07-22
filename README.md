@@ -62,4 +62,10 @@ The sobel edged binarized image is splitted in 4 parts, 2 tops and 2 bottoms, an
 python eyes_detection.py my_extracted_face.jpg
 ```
 
+# Video Demo
+On youtube :
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/-6W8UtYoLOE/0.jpg)]
+(https://www.youtube.com/watch?v=-6W8UtYoLOE)
+
 
