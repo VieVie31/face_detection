@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from tools import *
+from tqdm import tqdm
 from skimage.feature import local_binary_pattern
 from sklearn.linear_model import LogisticRegression
 
@@ -45,13 +46,13 @@ if __name__ == '__main__':
 
     print "load positives..."
 
-    for img_name in positives_names:
+    for img_name in tqdm(positives_names):
         try: positives.append((imread(POSITIVES + img_name), 1))
         except: pass
 
     print "load negatives..."
 
-    for img_name in negatives_names:
+    for img_name in tqdm(negatives_names):
         try: negatives.append(
             (cv2.resize(
                 imread(NEGATIVES + img_name),
@@ -69,8 +70,24 @@ if __name__ == '__main__':
 
     #feature extraction (LBP histogram of the image)
     print "feature extraction... (LBP block histogram)"
-    X_test  = map(pre_processing, X_test)
-    X_train = map(pre_processing, X_train)
+    tmp = []
+    for v in X_test:
+        try:
+            tmp.append(pre_processing(v))
+        except:
+            pass
+    X_test = tmp
+
+    tmp = []
+    for v in X_train:
+        try:
+            tmp.append(pre_processing(v))
+        except:
+            pass
+    X_train = tmp
+
+    print len(X_test)
+    print len(X_train)
 
     #creating a model (Logistic classifier)
     print "model training..."
