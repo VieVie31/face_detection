@@ -58,6 +58,18 @@ And now with the sobel trick :
 
 The sobel edged binarized image is splitted in 4 parts, 2 tops and 2 bottoms, and with 1 cluster k-means on each of the top image, the eyes should be near to the center cluster...
 
+### face aligment
+
+After eyes localisaiton, we can perform aligment of the face using the angle of the vector formed by the 2 points : the eyes...
+
+croped face from an image :
+![face detected not aligned](img/not_aligned_face.png "face detected not aligned")
+detection of the eyes :
+![eyes found](img/eyes_detected.png "eyes found")
+same face after eyes aligment :
+![aligned](img/eyes_aligned.png "eyes aligment")
+
+
 ```bash
 python eyes_detection.py my_extracted_face.jpg
 ```

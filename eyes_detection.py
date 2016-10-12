@@ -72,14 +72,9 @@ plt.show()
 
 
 #get face rotation angle
-def angle_between(p1, p2):
-    ang1 = np.arctan2(*p1[::-1])
-    ang2 = np.arctan2(*p2[::-1])
-    return np.rad2deg((ang1 - ang2) % (2 * np.pi))
-
 def angle(p1, p2):
-    a = angle_between(p1, p2)
-    return np.rint(min(a, abs(360 - a)))
+    a = np.arctan2(p2[0] - p1[0], p2[1] - p1[1])
+    return np.rad2deg(a)
 
 theta = angle(top_left_center, top_right_center)
 print top_left_center
